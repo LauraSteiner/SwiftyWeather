@@ -27,9 +27,20 @@ struct WeatherView: View {
 						.symbolRenderingMode(.multicolor)
 					Text("Wild Weather")
 						.font(.largeTitle)
-					Text("42°F")
+					Group{
+						//Text("\(weatherVM.temperature)", format: .number.rounded(increment: 1.0)) +
+						//Text("\(100)", format: .number.rounded(increment: 1.0)) +
+						Text(weatherVM.temperature, format: .number.rounded(increment: 1.0)) +
+						Text("°F")
+					}
 						.font(.system(size: 150, weight: .thin, design: .default))
-					Text("Wind 10mph - Feels Like 36°F")
+					Group{
+						Text("Wind ") +
+						Text(weatherVM.windspeed, format: .number.rounded(increment: 1.0)) +
+						Text(" mph  - Feels Like ") +
+						Text(weatherVM.feelsLike, format: .number.rounded(increment: 1.0)) +
+						Text("°F")
+					}
 						.font(.title2)
 						.padding(.bottom)
 				}
