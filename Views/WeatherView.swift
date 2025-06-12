@@ -47,15 +47,16 @@ struct WeatherView: View {
 					if weatherVM.date.count == 7 {
 						List(){
 							ForEach((0...6), id:\.self){ index in
-								HStack{
+								HStack(alignment: .top){
 									Image(systemName: getWeatherIcon(for: weatherVM.dailyWeatherCode[index]))
-									Text("\(weatherVM.date[index])")
+								
+									Text("\(getWeekDay(daysAdded: (index + 1)))")
 									Spacer()
 									Text(weatherVM.dailyLowTemp[index], format: .number.rounded(increment: 1.0)) +
 									Text("°F")
 									Text("/")
 									Group{
-										Text(weatherVM.dailyHighTemp[index], format: .number.rounded(increment: 1.0)) +
+										Text(weatherVM.dailyHighTemp[index], format: .number.rounded(increment: 1.0))
 										Text("°F")
 									}
 									.font(.title)
@@ -107,6 +108,16 @@ struct WeatherView: View {
 }
 
 extension WeatherView {
+	func getWeekDay(daysAdded: Int) -> String {
+		print("Days added is: \(daysAdded)")
+		print("Current day is: \(Date.now)")
+		let date = Calendar.current.date(byAdding: .day, value: daysAdded, to: Date.now)!
+		let dayNumber = Calendar.current.component(.weekday, from: date)
+		return Calendar.current.weekdaySymbols[dayNumber - 1]
+		//return String(dayName)
+		//return "Tuesday"
+	}
+	
 	func getWeatherDescription(for code: Int) -> String {
 		switch code {
 			case 0:
