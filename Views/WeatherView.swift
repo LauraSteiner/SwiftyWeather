@@ -5,6 +5,7 @@
 //  Created by Laura Steiner on 6/11/25.
 //
 
+
 import SwiftUI
 import SwiftData
 
@@ -85,18 +86,20 @@ struct WeatherView: View {
 						} label: {
 							Image(systemName: "gear")
 						}
-						
+						.tint(.white)
 					}
 				}
 			}
+			// TODO -- fix white tint
 			.tint(.white)
 			.foregroundStyle(.white)
-			.task{
-				if preferences.count > 0 {
-					let newURL = getNewURL()
-					weatherVM.urlString = newURL
+			.onChange(of: preferences) {
+				Task { @MainActor in
+					await getAPIData()
 				}
-				await weatherVM.getData()
+			}
+			.task {
+				await getAPIData()
 			}
 			
 		}
@@ -119,6 +122,14 @@ struct WeatherView: View {
 }
 
 extension WeatherView {
+	func getAPIData() async {
+		if preferences.count > 0 {
+			let newURL = getNewURL()
+			weatherVM.urlString = newURL
+		}
+		await weatherVM.getData()
+	}
+	
 	func getWeekDay(daysAdded: Int) -> String {
 		let date = Calendar.current.date(byAdding: .day, value: daysAdded, to: Date.now)!
 		let dayNumber = Calendar.current.component(.weekday, from: date)
