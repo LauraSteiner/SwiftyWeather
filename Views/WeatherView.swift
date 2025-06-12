@@ -63,9 +63,11 @@ struct WeatherView: View {
 									.bold()
 								}
 								.font(.title2)
+								//.listRowBackground(Color.cyan.opacity(0.75))
+								.listRowBackground(Color.clear)
 							}
 						}
-						.foregroundStyle(.black)
+						.foregroundStyle(.white)
 						.listStyle(.plain)
 					}
 				}
@@ -109,13 +111,9 @@ struct WeatherView: View {
 
 extension WeatherView {
 	func getWeekDay(daysAdded: Int) -> String {
-		print("Days added is: \(daysAdded)")
-		print("Current day is: \(Date.now)")
 		let date = Calendar.current.date(byAdding: .day, value: daysAdded, to: Date.now)!
 		let dayNumber = Calendar.current.component(.weekday, from: date)
 		return Calendar.current.weekdaySymbols[dayNumber - 1]
-		//return String(dayName)
-		//return "Tuesday"
 	}
 	
 	func getWeatherDescription(for code: Int) -> String {
