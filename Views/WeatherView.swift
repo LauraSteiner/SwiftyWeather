@@ -10,7 +10,7 @@ import SwiftData
 
 struct WeatherView: View {
 	@Environment(\.modelContext) private var modelContext
-	@Query private var items: [Item]
+	@Query private var preference: [Preference]
 	@State var weatherVM = WeatherViewModel()
 	@State var weatherIcon: String = ""
 	@State var weatherDescription: String = ""
@@ -93,20 +93,20 @@ struct WeatherView: View {
 		}
 	}
 	
-	private func addItem() {
-		withAnimation {
-			let newItem = Item(timestamp: Date())
-			modelContext.insert(newItem)
-		}
-	}
+//	private func addItem() {
+//		withAnimation {
+//			let newItem = Item(timestamp: Date())
+//			modelContext.insert(newItem)
+//		}
+//	}
 	
-	private func deleteItems(offsets: IndexSet) {
-		withAnimation {
-			for index in offsets {
-				modelContext.delete(items[index])
-			}
-		}
-	}
+//	private func deleteItems(offsets: IndexSet) {
+//		withAnimation {
+//			for index in offsets {
+//				modelContext.delete(items[index])
+//			}
+//		}
+//	}
 }
 
 extension WeatherView {
