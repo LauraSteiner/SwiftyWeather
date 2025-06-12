@@ -96,22 +96,7 @@ struct WeatherView: View {
 					let newURL = getNewURL()
 					weatherVM.urlString = newURL
 				}
-				//				if !preferences.count > 0 {
-				//
-				//					var newURL = "https://api.open-meteo.com/v1/forecast?"
-				////					newURL += "latitude=\(preferences[0].latitude)&"
-				////					newURL += "longitude=\(preferences[0].longitude)&"
-				////					newURL += "current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=uv_index&&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&"
-				////					newURL += "temperature_unit=" + (preferences[0].selectedUnit == .metric ? "celsius" :"fahrenheit")
-				////					newURL += "&wind_speed_unit=" + (preferences[0].selectedUnit == .metric ? "kmh" : "mph")
-				////					newURL += "&precipitation_unit=" + (preferences[0].selectedUnit == .metric ? "cm" :"inch")
-				////					newURL += "&timezone=auto"
-				//					print(newURL)
-				//					weatherVM.urlString = newURL
-				//				}
 				await weatherVM.getData()
-				//weatherIcon = getWeatherIcon(for: weatherVM.weatherCode)
-				//weatherDescription = getWeatherDescription(for: weatherVM.weatherCode)
 			}
 			
 		}
@@ -147,10 +132,10 @@ extension WeatherView {
 		newURL += "current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=uv_index&&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&"
 		newURL += "temperature_unit=" + (preferences[0].selectedUnit == .metric ? "celsius" :"fahrenheit")
 		newURL += "&wind_speed_unit=" + (preferences[0].selectedUnit == .metric ? "kmh" : "mph")
-		newURL += "&precipitation_unit=" + (preferences[0].selectedUnit == .metric ? "cm" :"inch")
+		newURL += "&precipitation_unit=" + (preferences[0].selectedUnit == .metric ? "mm" :"inch")
 		newURL += "&timezone=auto"
 		
-		print(newURL)
+		print("New URL is \(newURL)")
 		
 		return newURL
 	}
