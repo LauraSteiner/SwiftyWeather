@@ -15,9 +15,14 @@ class WeatherViewModel: Codable {
 	var feelsLike: Double = 0
 	var windspeed: Double = 0
 	var weatherCode: Int = 0
+	var date: [String] = []
+	var dailyWeatherCode: [Int] = []
+	var dailyHighTemp: [Double] = []
+	var dailyLowTemp: [Double] = []
 	
 	private struct Weather: Codable {
 		var current: Current
+		var daily: Daily
 	}
 	
 	struct Current: Codable {
@@ -25,6 +30,13 @@ class WeatherViewModel: Codable {
 		var apparent_temperature: Double
 		var weather_code: Int
 		var wind_speed_10m: Double
+	}
+	
+	struct Daily: Codable {
+		var time: [String]
+		var weather_code: [Int]
+		var temperature_2m_max: [Double]
+		var temperature_2m_min: [Double]
 	}
 	
 	func getData() async {
@@ -47,8 +59,12 @@ class WeatherViewModel: Codable {
 				self.feelsLike = weather.current.apparent_temperature
 				self.windspeed = weather.current.wind_speed_10m
 				self.weatherCode = weather.current.weather_code
+				self.date = weather.daily.time
+				self.dailyWeatherCode = weather.daily.weather_code
+				self.dailyHighTemp = weather.daily.temperature_2m_max
+				self.dailyLowTemp = weather.daily.temperature_2m_min
 				isLoading = false
-				print("Temperature is \(self.temperature)")
+				print("daily dates: \(self.date)")
 			}
 			
 		} catch {

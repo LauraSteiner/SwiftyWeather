@@ -31,8 +31,6 @@ struct WeatherView: View {
 					Text(weatherDescription)
 						.font(.largeTitle)
 					Group{
-						//Text("\(weatherVM.temperature)", format: .number.rounded(increment: 1.0)) +
-						//Text("\(100)", format: .number.rounded(increment: 1.0)) +
 						Text(weatherVM.temperature, format: .number.rounded(increment: 1.0)) +
 						Text("°F")
 					}
@@ -46,6 +44,14 @@ struct WeatherView: View {
 					}
 						.font(.title2)
 						.padding(.bottom)
+					List(){
+						ForEach(weatherVM.date, id:\.self){ date in
+							Text(date)
+								.listRowSeparator(.hidden)
+						}
+					}
+					.foregroundStyle(.black)
+					.listStyle(.plain)
 				}
 				.toolbar{
 					ToolbarItem(placement: .topBarTrailing) {
