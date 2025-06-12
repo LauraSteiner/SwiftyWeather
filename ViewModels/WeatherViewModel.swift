@@ -64,7 +64,6 @@ class WeatherViewModel: Codable {
 				self.dailyHighTemp = weather.daily.temperature_2m_max
 				self.dailyLowTemp = weather.daily.temperature_2m_min
 				isLoading = false
-				print("daily dates: \(self.date)")
 			}
 			
 		} catch {

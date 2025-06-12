@@ -126,6 +126,7 @@
 			children = (
 				B30B60FA2DFA7AC600DA9E7A /* WeatherView.swift */,
 				B30B61292DFABCAA00DA9E7A /* PreferenceView.swift */,
+				B30B61272DFABC3500DA9E7A /* Helpers.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -133,7 +134,6 @@
 		B30B61242DFA839500DA9E7A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				B30B61272DFABC3500DA9E7A /* Helpers.swift */,
 				B30B61252DFA83AD00DA9E7A /* WeatherViewModel.swift */,
 			);
 			path = ViewModels;

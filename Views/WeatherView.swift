@@ -10,10 +10,10 @@ import SwiftData
 
 struct WeatherView: View {
 	@Environment(\.modelContext) private var modelContext
-	@Query private var preference: [Preference]
+	
+	@Query var preferences: [Preference]
 	@State var weatherVM = WeatherViewModel()
-	@State var weatherIcon: String = ""
-	@State var weatherDescription: String = ""
+	@State private var sheetIsPresented = false
 	
 	var body: some View {
 		NavigationStack{
@@ -23,12 +23,12 @@ struct WeatherView: View {
 					.ignoresSafeArea()
 				VStack{
 					//Image(systemName: "cloud.sun.rain.fill")
-					Image(systemName: weatherIcon)
+					Image(systemName: getWeatherIcon(for: weatherVM.weatherCode))
 						.resizable()
 						.scaledToFit()
 						.padding(.horizontal)
 						.symbolRenderingMode(.multicolor)
-					Text(weatherDescription)
+					Text(getWeatherDescription(for: weatherVM.weatherCode))
 						.font(.largeTitle)
 					Group{
 						Text(weatherVM.temperature, format: .number.rounded(increment: 1.0)) +
@@ -49,7 +49,7 @@ struct WeatherView: View {
 							ForEach((0...6), id:\.self){ index in
 								HStack(alignment: .top){
 									Image(systemName: getWeatherIcon(for: weatherVM.dailyWeatherCode[index]))
-								
+									
 									Text("\(getWeekDay(daysAdded: (index + 1)))")
 									Spacer()
 									Text(weatherVM.dailyLowTemp[index], format: .number.rounded(increment: 1.0)) +
@@ -71,10 +71,17 @@ struct WeatherView: View {
 						.listStyle(.plain)
 					}
 				}
+				
+				.fullScreenCover(isPresented: $sheetIsPresented){
+					NavigationStack{
+						PreferenceView()
+					}
+				}
+				
 				.toolbar{
 					ToolbarItem(placement: .topBarTrailing) {
 						Button {
-							//
+							sheetIsPresented.toggle()
 						} label: {
 							Image(systemName: "gear")
 						}
@@ -85,28 +92,40 @@ struct WeatherView: View {
 			.tint(.white)
 			.foregroundStyle(.white)
 			.task{
+//				if !preferences.isEmpty(){
+//					// TODO: change the URL to use preferences
+//					var newURL = "https://api.open-meteo.com/v1/forecast?"
+//					newURL += "latitude=\(preferences[0].latitude)&"
+//					newURL += "longitude=\(preferences[0].longitude)&"
+//					newURL += "current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=uv_index&&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&"
+//					newURL += "temperature_unit=" + (preferences[0].selectedUnit == .metric ? "celsius" :"fahrenheit")
+//					newURL += "&wind_speed_unit=" + (preferences[0].selectedUnit == .metric ? "kmh" : "mph")
+//					newURL += "&precipitation_unit=" + (preferences[0].selectedUnit == .metric ? "cm" :"inch")
+//					newURL += "&timezone=auto"
+//					weatherVM.urlString = newURL
+//				}
 				await weatherVM.getData()
-				weatherIcon = getWeatherIcon(for: weatherVM.weatherCode)
-				weatherDescription = getWeatherDescription(for: weatherVM.weatherCode)
+				//weatherIcon = getWeatherIcon(for: weatherVM.weatherCode)
+				//weatherDescription = getWeatherDescription(for: weatherVM.weatherCode)
 			}
 			
 		}
 	}
 	
-//	private func addItem() {
-//		withAnimation {
-//			let newItem = Item(timestamp: Date())
-//			modelContext.insert(newItem)
-//		}
-//	}
+	//	private func addItem() {
+	//		withAnimation {
+	//			let newItem = Item(timestamp: Date())
+	//			modelContext.insert(newItem)
+	//		}
+	//	}
 	
-//	private func deleteItems(offsets: IndexSet) {
-//		withAnimation {
-//			for index in offsets {
-//				modelContext.delete(items[index])
-//			}
-//		}
-//	}
+	//	private func deleteItems(offsets: IndexSet) {
+	//		withAnimation {
+	//			for index in offsets {
+	//				modelContext.delete(items[index])
+	//			}
+	//		}
+	//	}
 }
 
 extension WeatherView {

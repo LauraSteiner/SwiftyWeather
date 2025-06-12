@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "launchscreen.jpeg",
+      "filename" : "weather-icon.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "launchscreen@2x.jpeg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "launchscreen@3x.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }
