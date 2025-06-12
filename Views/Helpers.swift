@@ -14,8 +14,8 @@ enum UnitSystem: String, Codable, CaseIterable, Identifiable{
 	var id: String { rawValue }
 }
 
-func getDegreesString( degreeUnitsShowing: Bool, selectedUnit: UnitSystem) -> String{
-	if !degreeUnitsShowing {
+func getDegreesString( degreeUnitShowing: Bool, selectedUnit: UnitSystem) -> String{
+	if !degreeUnitShowing {
 		return ""
 	}
 	

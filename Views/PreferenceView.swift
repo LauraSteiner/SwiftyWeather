@@ -53,7 +53,7 @@ struct PreferenceView: View {
 							.font(.title2)
 					}
 					
-					Text("42°\(getDegreesString(degreeUnitsShowing: degreeUnitShowing, selectedUnit: selectedUnit))")
+					Text("42°\(getDegreesString(degreeUnitShowing: degreeUnitShowing, selectedUnit: selectedUnit))")
 						.font(.system(size: 150))
 					HStack{
 						Button("Save") {

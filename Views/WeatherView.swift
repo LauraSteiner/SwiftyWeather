@@ -15,6 +15,7 @@ struct WeatherView: View {
 	@Query var preferences: [Preference]
 	@State var weatherVM = WeatherViewModel()
 	@State private var sheetIsPresented = false
+	@State private var degreeString = "F"
 	
 	var body: some View {
 		NavigationStack{
@@ -33,7 +34,8 @@ struct WeatherView: View {
 						.font(.largeTitle)
 					Group{
 						Text(weatherVM.temperature, format: .number.rounded(increment: 1.0)) +
-						Text("°F")
+						Text("°") +
+						Text(degreeString)
 					}
 					.font(.system(size: 150, weight: .thin, design: .default))
 					Group{
@@ -41,7 +43,8 @@ struct WeatherView: View {
 						Text(weatherVM.windspeed, format: .number.rounded(increment: 1.0)) +
 						Text(" mph  - Feels Like ") +
 						Text(weatherVM.feelsLike, format: .number.rounded(increment: 1.0)) +
-						Text("°F")
+						Text("°") +
+						Text(degreeString)
 					}
 					.font(.title2)
 					.padding(.bottom)
@@ -54,11 +57,13 @@ struct WeatherView: View {
 									Text("\(getWeekDay(daysAdded: (index + 1)))")
 									Spacer()
 									Text(weatherVM.dailyLowTemp[index], format: .number.rounded(increment: 1.0)) +
-									Text("°F")
+									Text("°") +
+									Text(degreeString)
 									Text("/")
 									Group{
 										Text(weatherVM.dailyHighTemp[index], format: .number.rounded(increment: 1.0))
-										Text("°F")
+										Text("°") +
+										Text(degreeString)
 									}
 									.font(.title)
 									.bold()
@@ -126,6 +131,7 @@ extension WeatherView {
 		if preferences.count > 0 {
 			let newURL = getNewURL()
 			weatherVM.urlString = newURL
+			degreeString = getDegreesString(degreeUnitShowing:preferences[0].degreeUnitShowing, selectedUnit: preferences[0].selectedUnit)
 		}
 		await weatherVM.getData()
 	}
